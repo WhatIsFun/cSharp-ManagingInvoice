@@ -1,0 +1,15 @@
+C:\Users\moham\source\repos\cSharp_Managing_Invoices\bin\Debug\net6.0\cSharp_Managing_Invoices.exe
+C:\Users\moham\source\repos\cSharp_Managing_Invoices\bin\Debug\net6.0\cSharp_Managing_Invoices.deps.json
+C:\Users\moham\source\repos\cSharp_Managing_Invoices\bin\Debug\net6.0\cSharp_Managing_Invoices.runtimeconfig.json
+C:\Users\moham\source\repos\cSharp_Managing_Invoices\bin\Debug\net6.0\cSharp_Managing_Invoices.dll
+C:\Users\moham\source\repos\cSharp_Managing_Invoices\bin\Debug\net6.0\cSharp_Managing_Invoices.pdb
+C:\Users\moham\source\repos\cSharp_Managing_Invoices\obj\Debug\net6.0\cSharp_Managing_Invoices.csproj.AssemblyReference.cache
+C:\Users\moham\source\repos\cSharp_Managing_Invoices\obj\Debug\net6.0\cSharp_Managing_Invoices.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\moham\source\repos\cSharp_Managing_Invoices\obj\Debug\net6.0\cSharp_Managing_Invoices.AssemblyInfoInputs.cache
+C:\Users\moham\source\repos\cSharp_Managing_Invoices\obj\Debug\net6.0\cSharp_Managing_Invoices.AssemblyInfo.cs
+C:\Users\moham\source\repos\cSharp_Managing_Invoices\obj\Debug\net6.0\cSharp_Managing_Invoices.csproj.CoreCompileInputs.cache
+C:\Users\moham\source\repos\cSharp_Managing_Invoices\obj\Debug\net6.0\cSharp_Managing_Invoices.dll
+C:\Users\moham\source\repos\cSharp_Managing_Invoices\obj\Debug\net6.0\refint\cSharp_Managing_Invoices.dll
+C:\Users\moham\source\repos\cSharp_Managing_Invoices\obj\Debug\net6.0\cSharp_Managing_Invoices.pdb
+C:\Users\moham\source\repos\cSharp_Managing_Invoices\obj\Debug\net6.0\cSharp_Managing_Invoices.genruntimeconfig.cache
+C:\Users\moham\source\repos\cSharp_Managing_Invoices\obj\Debug\net6.0\ref\cSharp_Managing_Invoices.dll
