@@ -15,7 +15,7 @@ namespace cSharp_Managing_Invoices
             Console.WriteLine("Main Menu: \n1) Shop Settings.\n2) Manage Shop Items.\n3) Create New Invoice.\n4) Report Statistics.\n5)Report All Invoices.\n6) Search for Invoices.\n7) Program Statistics.\n8) Exit.");
             while (true)
             {
-                Console.Write("Please select an option: ");
+                Console.Write("\nPlease select an option: ");
                 string option = Console.ReadLine();
                 try
                 {
@@ -25,10 +25,12 @@ namespace cSharp_Managing_Invoices
                     switch (NoOption)
                     {
                         case 1:
-                            Console.WriteLine("1");
+                            ShopSetting shopSetting = new ShopSetting();
+                            shopSetting.ShopSettingMenu();
                             break;
                         case 2:
-                            Console.WriteLine("2");
+                            ManageShopItem manageShopItem = new ManageShopItem();
+                            manageShopItem.ManageShopMenu();
                             break;
                         case 3:
                             Console.WriteLine("3");

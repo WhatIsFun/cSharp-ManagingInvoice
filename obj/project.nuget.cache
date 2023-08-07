@@ -1,13 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "xEhW+g6JumaTyKTesPciSsWXEas/fkQKf540O86fH2ToIx5i+VBr4yvOZrfQhWGJreSYV6JOq2VYY1lhzf9bIA==",
+  "dgSpecHash": "FluxmapIoDk5XQRVAghUshwYvXmFa6FSPhugaioDz7485usPwga84fSkTHjjZ6K8hhnQA2sirBvbQSys398eTA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\moham\\source\\repos\\cSharp_Managing_Invoices\\cSharp_Managing_Invoices.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\moham\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.20\\microsoft.windowsdesktop.app.ref.6.0.20.nupkg.sha512",
-    "C:\\Users\\moham\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.20\\microsoft.netcore.app.ref.6.0.20.nupkg.sha512",
-    "C:\\Users\\moham\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.20\\microsoft.aspnetcore.app.ref.6.0.20.nupkg.sha512",
-    "C:\\Users\\moham\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.20\\microsoft.netcore.app.host.win-x64.6.0.20.nupkg.sha512"
-  ],
+  "projectFilePath": "C:\\Users\\user\\Source\\Repos\\cSharp-ManagingInvoice\\cSharp_Managing_Invoices.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }
