@@ -51,11 +51,39 @@ namespace cSharp_Managing_Invoices
         }
         void AddItem()
         {
+            //Product newItem = new Product();
 
+            //Console.Write("Enter the Item ID: ");
+            //newItem.ProductId = Console.ReadLine();
+
+            //Console.Write("Enter the Item Name: ");
+            //newItem.Name = Console.ReadLine();
+
+            //Console.Write("Enter the Unit Price: ");
+            //newItem.UnitPrice = Convert.ToDecimal(Console.ReadLine());
+
+            //Console.Write("Enter the Quantity: ");
+            //newItem.Quantity = Convert.ToInt32(Console.ReadLine);
+
+            //shopItems.Add(newItem);
+            //Console.WriteLine("Item added successfully.");
         }
         void RemoveItem()
         {
+            //Console.Write("Enter the Item ID to delete: ");
+            //string itemIdToDelete = Console.ReadLine();
 
+            //Item itemToRemove = shopItems.FirstOrDefault(item => item.ItemId == itemIdToDelete);
+
+            //if (itemToRemove != null)
+            //{
+            //    shopItems.Remove(itemToRemove);
+            //    Console.WriteLine("Item deleted successfully.");
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Item not found.");
+            //}
         }
         void ChangePrice()
         {

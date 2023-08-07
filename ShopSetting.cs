@@ -111,7 +111,7 @@ namespace cSharp_Managing_Invoices
         {
             Console.Write("What is your shop name>> ");
             string ShopName = Console.ReadLine();
-            ShopName = shopName;
+            shopName = ShopName;
             SaveData();
             mainMenu.Navigation();
         }
@@ -126,10 +126,10 @@ namespace cSharp_Managing_Invoices
             string email = Console.ReadLine();
             Console.WriteLine("Enter a shop website>");
             string ShopWeb = Console.ReadLine();
-            telNum = Tel;
-            ShopFax = Fax;
-            email = Email;
-            ShopWeb = Website;
+            Tel = telNum;
+            Fax = ShopFax;
+            Email = email;
+            Website = ShopWeb;
             SaveData();
             mainMenu.Navigation();
         }
