@@ -8,6 +8,7 @@ namespace cSharp_Managing_Invoices
 {
     internal class ManageShopItem
     {
+        MainMenu mainMenu = new MainMenu();
         // Display Manage Shop Items Menu.
         public void ManageShopMenu()
         {
@@ -25,20 +26,16 @@ namespace cSharp_Managing_Invoices
                     switch (NoOption)
                     {
                         case 1:
-                            Console.WriteLine("1");
-                            ManageShopMenu();
+                            AddItem();
                             break;
                         case 2:
-                            Console.WriteLine("2");
-                            ManageShopMenu();
+                            RemoveItem();
                             break;
                         case 3:
-                            Console.WriteLine("3");
-                            ManageShopMenu();
+                            ChangePrice();
                             break;
                         case 4:
-                            Console.WriteLine("4");
-                            ManageShopMenu();
+                            DisplayItems();
                             break;
                         case 5:
                             MainMenu mainMenu = new MainMenu();
@@ -52,21 +49,21 @@ namespace cSharp_Managing_Invoices
                 }
             }
         }
-        //void AddItem()
-        //{
-            
-        //}
-        //void RemoveItem()
-        //{
+        void AddItem()
+        {
 
-        //}
-        //void ChangePrice()
-        //{
+        }
+        void RemoveItem()
+        {
 
-        //}
-        //void DisplayItems()
-        //{
+        }
+        void ChangePrice()
+        {
 
-        //}
+        }
+        void DisplayItems()
+        {
+
+        }
     }
 }

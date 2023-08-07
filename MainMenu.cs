@@ -67,6 +67,44 @@ namespace cSharp_Managing_Invoices
                     Console.WriteLine("Invalid input. Please enter a valid number.");
                 }
             }
-        }    
+        }
+        public void Navigation()
+        {
+            while (true)
+            {
+                Console.Write("Press (1) to go to Shop Setting Menu, And (2) to back to Main.\nIf you to exit press (3): ");
+                string option = Console.ReadLine();
+                try
+                {
+                    // Check if the all inputs are numbers if not the program will loop 
+                    int NoOption = int.Parse(option);
+                    if (NoOption < 0 || NoOption > 9) { Console.WriteLine("Invalid input. Please enter a number between 1 and 8."); }
+                    switch (NoOption)
+                    {
+                        case 1:
+                            ShopSetting shopSetting = new ShopSetting();
+                            shopSetting.ShopSettingMenu();
+                            break;
+                        case 2:
+                            ManageShopItem manageShopItem = new ManageShopItem();
+                            manageShopItem.ManageShopMenu();
+                            break;
+                        case 3:
+                            Console.Write("Are you sure you want to exit? (y/n)"); // Check if the user want to exit the application
+                            string ExitInput = Console.ReadLine();
+                            if (ExitInput.Equals("y", StringComparison.OrdinalIgnoreCase))
+                            {
+                                Console.Write("Thank You");
+                                Environment.Exit(0);
+                            }
+                            break;
+                    }
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid number.");
+                }
+            }
+        }
     }
 }
