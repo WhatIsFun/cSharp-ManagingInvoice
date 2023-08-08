@@ -8,7 +8,7 @@ Application Main Menu:
     2. Set Shop Name (data should be saved)
     3. Set Invoice Header (Tel / Fax / Email / Website) (Data should be saved)
     4. Go Back
-2- Manage Shop Items
+    2- Manage Shop Items
     1. Add Items (Item should be saved/serialized)
     2. Delete Items
     3. Change Item Price
