@@ -8,15 +8,10 @@ namespace cSharp_Managing_Invoices
 {
     internal class Product
     {
-        public string Name { get; set; }
+        public string ItemName { get; set; }
         public string Description { get; set; }
         public string ProductId { get; set; }
-        public decimal UnitPrice { get; set; }
+        public float UnitPrice { get; set; }
         public int Quantity { get; set; }
-
-        //public Product(string Name, decimal UnitPrice, int Quantity, string ProductId, string Description)
-        //{
-
-        //}
     }
 }

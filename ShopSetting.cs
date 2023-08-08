@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.PortableExecutable;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,17 +10,14 @@ namespace cSharp_Managing_Invoices
 {
     internal class ShopSetting
     {
-        MainMenu mainMenu = new MainMenu();
         public string shopName { get; set; }
         public string invoiceHeader { get; set; } 
         public string Tel { get; set; } // shop phone number
         public string Fax { get; set; }
         public string Email { get; set; }
         public string Website { get; set; }
-
-        
-
-
+        public List<Product> Items { get; set; }
+        public List<Invoice> Invoices { get; set; }
         // Display Shop Setting Menu.
         public void ShopSettingMenu()
         {
@@ -57,81 +55,122 @@ namespace cSharp_Managing_Invoices
                 }
             }
         }
-        public void LoadData()
+        static void LoadData()
         {
-            // Check if the ShopSettings folder exists
-            if (Directory.Exists("ShopSettings"))
+            MainMenu mainMenu = new MainMenu();
+
+            if (Directory.Exists("Items"))
             {
-                // Read each file and assign the value to the corresponding property
-                if (File.Exists("ShopSettings/Shop Name.txt"))
+                if (File.Exists("Items/items.bin"))
                 {
-                    invoiceHeader = File.ReadAllText("ShopSettings/Shop Name.txt");
+                    using (Stream stream = File.Open("Items/items.bin", FileMode.Open))
+                    {
+                        var formatter1 = new BinaryFormatter();
+                        var shopItems = (List<Product>)formatter1.Deserialize(stream);
+                    }
                 }
-                if (File.Exists("ShopSettings/Header.txt"))
+                else
                 {
-                    invoiceHeader = File.ReadAllText("ShopSettings/Header.txt");
-                }
-                if (File.Exists("ShopSettings/Tel.txt"))
-                {
-                    Tel = File.ReadAllText("ShopSettings/Tel.txt");
-                }
-                if (File.Exists("ShopSettings/Fax.txt"))
-                {
-                    Fax = File.ReadAllText("ShopSettings/Fax.txt");
-                }
-                if (File.Exists("ShopSettings/Email.txt"))
-                {
-                    Email = File.ReadAllText("ShopSettings/Email.txt");
-                }
-                if (File.Exists("ShopSettings/Website.txt"))
-                {
-                    Website = File.ReadAllText("ShopSettings/Website.txt");
+                    var shopItems = new List<Product>();
                 }
             }
             else
             {
-                // Create the ShopSettings folder if it does not exist
-                Directory.CreateDirectory("ShopSettings");
+                Directory.CreateDirectory("Items");
+                var shopItems = new List<Product>();
+                using (Stream stream = File.Open("Items/items.bin", FileMode.Create)) // check if it works
+                {
+                    var formatter = new BinaryFormatter();
+                    //formatter.Serialize(stream, shopItems);
+                }
+            }
+            if (Directory.Exists("Invoices"))
+            {
+                if (File.Exists("Invoices/Invoice.bin"))
+                {
+                    using (Stream stream = File.Open("Invoices/Invoice.bin", FileMode.Open))
+                    {
+                        var formatter2 = new BinaryFormatter();
+                        var shopInvoice = (List<Invoice>)formatter2.Deserialize(stream);
+                    }
+                }
+                else
+                {
+                    var shopInvoice = new List<Invoice>();
+                }
+            }
+            else
+            {
+                Directory.CreateDirectory("Invoices");
+                var shopInvoice = new List<Invoice>();
+            }
+
+            if (File.Exists("InvoiceHeader.txt"))
+            {
+                using (StreamReader reader = new StreamReader("InvoiceHeader.txt"))
+                {
+                    string invoiceHeader = reader.ReadToEnd();
+                    string[] headerParts = invoiceHeader.Split('\n');
+                    if (headerParts.Length == 4)
+                    {
+                        string Tel = headerParts[0].Trim();
+                        string Fax = headerParts[1].Trim();
+                        string Email = headerParts[2].Trim();
+                        string Website = headerParts[3].Trim();
+                    }
+                }
+            }
+            mainMenu.Navigation();
+        }
+        static void SaveInvoiceHeaderData(string shopTel, string shopFax, string shopEmail, string shopWebsite)
+        {
+            using (StreamWriter writer = new StreamWriter("InvoiceHeader.txt"))
+            {
+                writer.WriteLine(shopTel);
+                writer.WriteLine(shopFax);
+                writer.WriteLine(shopEmail);
+                writer.WriteLine(shopWebsite);
+            }
+        }
+        static void SetInvoiceHeader()
+        {
+            MainMenu mainMenu = new MainMenu();
+
+            Console.Write("Enter the shop telephone number: ");
+            string shopTel = Console.ReadLine();
+
+            Console.Write("Enter the shop fax number: ");
+            string shopFax = Console.ReadLine();
+
+            Console.Write("Enter the shop email: ");
+            string shopEmail = Console.ReadLine();
+
+            Console.Write("Enter the shop website: ");
+            string shopWebsite = Console.ReadLine();
+
+            Console.WriteLine("Invoice header set successfully.");
+            SaveInvoiceHeaderData(shopTel, shopFax, shopEmail, shopWebsite);
+            mainMenu.Navigation();
+        }
+        static void SetShopName()
+        {
+            MainMenu mainMenu = new MainMenu();
+
+            Console.Write("Enter the new shop name: ");
+            string shopName = Console.ReadLine();
+            Console.WriteLine("Shop name set successfully.");
+            SaveShopNameData(shopName);
+            mainMenu.Navigation();
+        }
+        static void SaveShopNameData(string shopName)
+        {
+            using (StreamWriter writer = new StreamWriter("ShopName.txt"))
+            {
+                writer.WriteLine(shopName);
             }
         }
 
-        // A method to save the shop data to files
-        public void SaveData()
-        {
-            // Write each property value to a file in the ShopSettings folder
-            File.WriteAllText("ShopSettings/Shop Name.txt", shopName);
-            File.WriteAllText("ShopSettings/Header.txt", invoiceHeader);
-            File.WriteAllText("ShopSettings/Tel.txt", Tel);
-            File.WriteAllText("ShopSettings/Fax.txt", Fax);
-            File.WriteAllText("ShopSettings/Email.txt", Email);
-            File.WriteAllText("ShopSettings/Website.txt", Website);
-        }
 
-        void SetShopName()
-        {
-            Console.Write("What is your shop name>> ");
-            string ShopName = Console.ReadLine();
-            shopName = ShopName;
-            SaveData();
-            mainMenu.Navigation();
-        }
-        void SetInvoiceHeader()
-        {
-            Console.WriteLine("Invoice Header");
-            Console.WriteLine("Enter a telephone number>");
-            string telNum = Console.ReadLine();
-            Console.WriteLine("Enter a shop fax>");
-            string ShopFax = Console.ReadLine();
-            Console.WriteLine("Enter a shop Email>");
-            string email = Console.ReadLine();
-            Console.WriteLine("Enter a shop website>");
-            string ShopWeb = Console.ReadLine();
-            Tel = telNum;
-            Fax = ShopFax;
-            Email = email;
-            Website = ShopWeb;
-            SaveData();
-            mainMenu.Navigation();
-        }
+        
     }
 }

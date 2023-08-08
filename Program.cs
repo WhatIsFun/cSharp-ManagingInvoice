@@ -1,4 +1,7 @@
-﻿namespace cSharp_Managing_Invoices
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+
+namespace cSharp_Managing_Invoices
 {
     internal class Program
     {
@@ -35,10 +38,7 @@
                         passTry--;
                     }
                 }
-            
-                
-            }
-            
+            }  
         }
     }
 }

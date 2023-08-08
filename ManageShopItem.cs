@@ -8,6 +8,7 @@ namespace cSharp_Managing_Invoices
 {
     internal class ManageShopItem
     {
+        public static List<Product> shopItems = new List<Product>();
         MainMenu mainMenu = new MainMenu();
         // Display Manage Shop Items Menu.
         public void ManageShopMenu()
@@ -38,7 +39,6 @@ namespace cSharp_Managing_Invoices
                             DisplayItems();
                             break;
                         case 5:
-                            MainMenu mainMenu = new MainMenu();
                             mainMenu.Menu();
                             break;
                     }
@@ -51,47 +51,79 @@ namespace cSharp_Managing_Invoices
         }
         void AddItem()
         {
-            //Product newItem = new Product();
+            Product newItem = new Product();
 
-            //Console.Write("Enter the Item ID: ");
-            //newItem.ProductId = Console.ReadLine();
+            Console.Write("Enter the product ID: ");
+            newItem.ProductId = Console.ReadLine();
 
-            //Console.Write("Enter the Item Name: ");
-            //newItem.Name = Console.ReadLine();
+            Console.Write("Enter the product name: ");
+            newItem.ItemName = Console.ReadLine();
 
-            //Console.Write("Enter the Unit Price: ");
-            //newItem.UnitPrice = Convert.ToDecimal(Console.ReadLine());
+            Console.Write("Enter the product unit price: ");
+            newItem.UnitPrice = float.Parse(Console.ReadLine());
 
-            //Console.Write("Enter the Quantity: ");
-            //newItem.Quantity = Convert.ToInt32(Console.ReadLine);
+            Console.Write("Enter product quantity: ");
+            newItem.Quantity = int.Parse(Console.ReadLine());
 
-            //shopItems.Add(newItem);
-            //Console.WriteLine("Item added successfully.");
+
+            shopItems.Add(newItem);
+            Console.WriteLine("Item added successfully.");
+            mainMenu.Navigation();
+
         }
         void RemoveItem()
         {
-            //Console.Write("Enter the Item ID to delete: ");
-            //string itemIdToDelete = Console.ReadLine();
+            Console.Write("Enter the Item ID to delete: ");
+            string productIdToDelete = Console.ReadLine();
 
-            //Item itemToRemove = shopItems.FirstOrDefault(item => item.ItemId == itemIdToDelete);
+            Product itemToRemove = shopItems.FirstOrDefault(item => item.ProductId == productIdToDelete);
 
-            //if (itemToRemove != null)
-            //{
-            //    shopItems.Remove(itemToRemove);
-            //    Console.WriteLine("Item deleted successfully.");
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Item not found.");
-            //}
+            if (itemToRemove != null)
+            {
+                shopItems.Remove(itemToRemove);
+                Console.WriteLine("Item deleted successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Item not found.");
+            }
+            mainMenu.Navigation();
         }
         void ChangePrice()
         {
+            Console.Write("Enter the Item ID to change the price: ");
+            string productIdToChangePrice = Console.ReadLine();
 
+            Product itemToChangePrice = shopItems.FirstOrDefault(item => item.ProductId == productIdToChangePrice);
+
+            if (itemToChangePrice != null)
+            {
+                Console.Write("Enter the new Unit Price: ");
+                itemToChangePrice.UnitPrice = float.Parse(Console.ReadLine());
+                Console.WriteLine("Item price changed successfully to {0} OMR.", productIdToChangePrice);
+                
+            }
+            else
+            {
+                Console.WriteLine("Item not found.");
+            }
+            mainMenu.Navigation();
         }
         void DisplayItems()
         {
-
+            if (shopItems.Count == 0)
+            {
+                Console.WriteLine("No items found in the shop.");
+            }
+            else
+            {
+                Console.WriteLine("\nAll Shop Items:");
+                foreach (Product item in shopItems)
+                {
+                    Console.WriteLine($"Item ID: {item.ProductId}, Item Name: {item.ItemName}, Unit Price: {item.UnitPrice}, Quantity: {item.Quantity}");
+                }
+            }
+            mainMenu.Navigation();
         }
     }
 }
