@@ -8,8 +8,9 @@ namespace cSharp_Managing_Invoices
 {
     internal class ManageShopItem
     {
-        public static List<Product> shopItems = new List<Product>();
         MainMenu mainMenu = new MainMenu();
+        ShopSetting shopSetting = new ShopSetting();
+
         // Display Manage Shop Items Menu.
         public void ManageShopMenu()
         {
@@ -65,41 +66,42 @@ namespace cSharp_Managing_Invoices
             Console.Write("Enter product quantity: ");
             newItem.Quantity = int.Parse(Console.ReadLine());
 
-
-            shopItems.Add(newItem);
+            shopSetting.shopItems.Add(newItem);
+            shopSetting.SaveItems(shopSetting.shopItems);
             Console.WriteLine("Item added successfully.");
-            mainMenu.Navigation();
-
+            ManageShopMenu();
         }
         void RemoveItem()
         {
             Console.Write("Enter the Item ID to delete: ");
             string productIdToDelete = Console.ReadLine();
 
-            Product itemToRemove = shopItems.FirstOrDefault(item => item.ProductId == productIdToDelete);
+            Product itemToRemove = shopSetting.shopItems.FirstOrDefault(item => item.ProductId == productIdToDelete);
 
             if (itemToRemove != null)
             {
-                shopItems.Remove(itemToRemove);
+                shopSetting.shopItems.Remove(itemToRemove);
+                shopSetting.SaveItems(shopSetting.shopItems);
                 Console.WriteLine("Item deleted successfully.");
             }
             else
             {
                 Console.WriteLine("Item not found.");
             }
-            mainMenu.Navigation();
+            ManageShopMenu();
         }
         void ChangePrice()
         {
             Console.Write("Enter the Item ID to change the price: ");
             string productIdToChangePrice = Console.ReadLine();
 
-            Product itemToChangePrice = shopItems.FirstOrDefault(item => item.ProductId == productIdToChangePrice);
+            Product itemToChangePrice = shopSetting.shopItems.FirstOrDefault(item => item.ProductId == productIdToChangePrice);
 
             if (itemToChangePrice != null)
             {
                 Console.Write("Enter the new Unit Price: ");
                 itemToChangePrice.UnitPrice = float.Parse(Console.ReadLine());
+                shopSetting.SaveItems(shopSetting.shopItems);
                 Console.WriteLine("Item price changed successfully to {0} OMR.", productIdToChangePrice);
                 
             }
@@ -107,23 +109,23 @@ namespace cSharp_Managing_Invoices
             {
                 Console.WriteLine("Item not found.");
             }
-            mainMenu.Navigation();
+            ManageShopMenu();
         }
         void DisplayItems()
         {
-            if (shopItems.Count == 0)
+            if (shopSetting.shopItems.Count == 0)
             {
                 Console.WriteLine("No items found in the shop.");
             }
             else
             {
                 Console.WriteLine("\nAll Shop Items:");
-                foreach (Product item in shopItems)
+                foreach (Product item in shopSetting.shopItems)
                 {
                     Console.WriteLine($"Item ID: {item.ProductId}, Item Name: {item.ItemName}, Unit Price: {item.UnitPrice}, Quantity: {item.Quantity}");
                 }
             }
-            mainMenu.Navigation();
+            ManageShopMenu();
         }
     }
 }

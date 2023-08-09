@@ -1,10 +1,14 @@
-﻿using System;
+﻿using Org.BouncyCastle.Asn1.TeleTrust;
+using Org.BouncyCastle.Bcpg;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.PortableExecutable;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using static iTextSharp.text.pdf.AcroFields;
 
 namespace cSharp_Managing_Invoices
 {
@@ -16,8 +20,8 @@ namespace cSharp_Managing_Invoices
         public string Fax { get; set; }
         public string Email { get; set; }
         public string Website { get; set; }
-        public List<Product> Items { get; set; }
-        public List<Invoice> Invoices { get; set; }
+        public List<Product> shopItems = new List<Product>();
+        public  List<Invoice> Invoices = new List<Invoice>();
         // Display Shop Setting Menu.
         public void ShopSettingMenu()
         {
@@ -55,76 +59,104 @@ namespace cSharp_Managing_Invoices
                 }
             }
         }
-        static void LoadData()
+        public void LoadData()
         {
-            MainMenu mainMenu = new MainMenu();
-
-            if (Directory.Exists("Items"))
-            {
-                if (File.Exists("Items/items.bin"))
-                {
-                    using (Stream stream = File.Open("Items/items.bin", FileMode.Open))
-                    {
-                        var formatter1 = new BinaryFormatter();
-                        var shopItems = (List<Product>)formatter1.Deserialize(stream);
-                    }
-                }
-                else
-                {
-                    var shopItems = new List<Product>();
-                }
-            }
-            else
-            {
-                Directory.CreateDirectory("Items");
-                var shopItems = new List<Product>();
-                using (Stream stream = File.Open("Items/items.bin", FileMode.Create)) // check if it works
-                {
-                    var formatter = new BinaryFormatter();
-                    //formatter.Serialize(stream, shopItems);
-                }
-            }
-            if (Directory.Exists("Invoices"))
-            {
-                if (File.Exists("Invoices/Invoice.bin"))
-                {
-                    using (Stream stream = File.Open("Invoices/Invoice.bin", FileMode.Open))
-                    {
-                        var formatter2 = new BinaryFormatter();
-                        var shopInvoice = (List<Invoice>)formatter2.Deserialize(stream);
-                    }
-                }
-                else
-                {
-                    var shopInvoice = new List<Invoice>();
-                }
-            }
-            else
-            {
-                Directory.CreateDirectory("Invoices");
-                var shopInvoice = new List<Invoice>();
-            }
-
-            if (File.Exists("InvoiceHeader.txt"))
-            {
-                using (StreamReader reader = new StreamReader("InvoiceHeader.txt"))
-                {
-                    string invoiceHeader = reader.ReadToEnd();
-                    string[] headerParts = invoiceHeader.Split('\n');
-                    if (headerParts.Length == 4)
-                    {
-                        string Tel = headerParts[0].Trim();
-                        string Fax = headerParts[1].Trim();
-                        string Email = headerParts[2].Trim();
-                        string Website = headerParts[3].Trim();
-                    }
-                }
-            }
-            mainMenu.Navigation();
+            LoadItems(ref shopItems);
+            LoadInvoices(ref Invoices);
+            LoadInvoiceHeader();
         }
-        static void SaveInvoiceHeaderData(string shopTel, string shopFax, string shopEmail, string shopWebsite)
+        static void LoadInvoiceHeader()
         {
-            using (StreamWriter writer = new StreamWriter("InvoiceHeader.txt"))
+            try
+            {
+                if (File.Exists("Shop Setting/InvoiceHeader.txt"))
+                {
+                    using (StreamReader reader = new StreamReader("InvoiceHeader.txt"))
+                    {
+                        string invoiceHeader = reader.ReadToEnd();
+                        string[] headerParts = invoiceHeader.Split('\n');
+                        if (headerParts.Length == 4)
+                        {
+                            string Tel = headerParts[0].Trim();
+                            string Fax = headerParts[1].Trim();
+                            string Email = headerParts[2].Trim();
+                            string Website = headerParts[3].Trim();
+                        }
+                    }
+                }
+                else
+                {
+                    Directory.CreateDirectory("Shop Setting");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading data: {ex.Message}");
+            }
+        }
+        public void LoadItems(ref List<Product> shopItems)
+        {
+            try
+            {
+                if (Directory.Exists("Shop Setting/Items"))
+                {
+                    if (File.Exists("Shop Setting/Items/items.json"))
+                    {
+                        string json = File.ReadAllText("Shop Setting/Items/items.json");
+                        shopItems = JsonSerializer.Deserialize<List<Product>>(json);
+                    }
+                    else
+                    {
+                        shopItems = new List<Product>();
+                    }
+                }
+                else
+                {
+                    Directory.CreateDirectory("Shop Setting/Items");
+                    shopItems = new List<Product>();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading items data: {ex.Message}");
+                shopItems = new List<Product>(); 
+            }
+
+        }
+
+        public void LoadInvoices(ref List<Invoice> Invoices)
+        {
+            try
+            {
+                if (Directory.Exists("Shop Setting/Invoices"))
+                {
+                    if (File.Exists("Shop Setting/Invoices/invoices.json"))
+                    {
+                        string json = File.ReadAllText("Shop Setting/Invoices/invoices.json");
+                        Invoices = JsonSerializer.Deserialize<List<Invoice>>(json);
+                    }
+                    else
+                    {
+                        Invoices = new List<Invoice>();
+                    }
+                }
+                else
+                {
+                    Directory.CreateDirectory("Shop Setting/Invoices");
+                    Invoices = new List<Invoice>();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading invoices data: {ex.Message}");
+                Invoices = new List<Invoice>();
+            }
+
+
+        }
+        public void SaveInvoiceHeaderData(string shopTel, string shopFax, string shopEmail, string shopWebsite)
+        {
+            using (StreamWriter writer = new StreamWriter("Shop Setting/InvoiceHeader.txt"))
             {
                 writer.WriteLine(shopTel);
                 writer.WriteLine(shopFax);
@@ -132,10 +164,8 @@ namespace cSharp_Managing_Invoices
                 writer.WriteLine(shopWebsite);
             }
         }
-        static void SetInvoiceHeader()
+        public void SetInvoiceHeader()
         {
-            MainMenu mainMenu = new MainMenu();
-
             Console.Write("Enter the shop telephone number: ");
             string shopTel = Console.ReadLine();
 
@@ -150,27 +180,57 @@ namespace cSharp_Managing_Invoices
 
             Console.WriteLine("Invoice header set successfully.");
             SaveInvoiceHeaderData(shopTel, shopFax, shopEmail, shopWebsite);
-            mainMenu.Navigation();
+            ShopSetting shopSetting = new ShopSetting();
+            shopSetting.ShopSettingMenu();
         }
-        static void SetShopName()
+        public void SetShopName()
         {
-            MainMenu mainMenu = new MainMenu();
-
             Console.Write("Enter the new shop name: ");
             string shopName = Console.ReadLine();
             Console.WriteLine("Shop name set successfully.");
             SaveShopNameData(shopName);
-            mainMenu.Navigation();
+            ShopSetting shopSetting = new ShopSetting();
+            shopSetting.ShopSettingMenu();
         }
-        static void SaveShopNameData(string shopName)
+        public void SaveShopNameData(string shopName)
         {
             using (StreamWriter writer = new StreamWriter("ShopName.txt"))
             {
                 writer.WriteLine(shopName);
             }
         }
-
-
-        
+        public void SaveData()
+        {
+            SaveItems(shopItems);
+            SaveInvoices(Invoices);
+        }
+        public void SaveItems(List <Product> shopItems)
+        {
+            try
+            {
+                string json = JsonSerializer.Serialize(shopItems, new JsonSerializerOptions { WriteIndented = true });
+                Directory.CreateDirectory("Shop Setting/Items"); // Create directory if it doesn't exist
+                File.WriteAllText("Shop Setting/Items/items.json", json);
+                Console.WriteLine("Items saved successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving items: {ex.Message}");
+            }
+        }
+        public void SaveInvoices(List<Invoice> Invoices)
+        {
+            try
+            {
+                string json = JsonSerializer.Serialize(Invoices, new JsonSerializerOptions { WriteIndented = true });
+                Directory.CreateDirectory("Shop Setting/Invoices"); 
+                File.WriteAllText("Shop Setting/Invoices/invoices.json", json);
+                Console.WriteLine("Invoices saved successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving invoices: {ex.Message}");
+            }
+        }
     }
 }

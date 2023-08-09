@@ -33,8 +33,9 @@ namespace cSharp_Managing_Invoices
                             manageShopItem.ManageShopMenu();
                             break;
                         case 3:
-                            Invoice invoiceSystem = new Invoice();
-                            invoiceSystem.CreateNewInvoice();
+                            NewInvoice invoiceSystem = new NewInvoice();
+                            ShopSetting shopSetting1 = new ShopSetting();
+                            invoiceSystem.CreateNewInvoice(shopSetting1.shopItems);
                             break;
                         case 4:
                             Console.WriteLine("4");
@@ -60,58 +61,6 @@ namespace cSharp_Managing_Invoices
                             {
                                 Menu();
                             } 
-                            break;
-                    }
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine("Invalid input. Please enter a valid number.");
-                }
-            }
-        }
-        public void Navigation()
-        {
-            while (true)
-            {
-                Console.Write("Press (1) to go Back, And (2) to Main Menu.\nIf you to exit press (3): ");
-                string option = Console.ReadLine();
-                try
-                {
-                    // Check if the all inputs are numbers if not the program will loop 
-                    int NoOption = int.Parse(option);
-                    if (NoOption < 0 || NoOption > 4) { Console.WriteLine("Invalid input. Please enter a number between 1 and 3."); }
-                    switch (NoOption)
-                    {
-                        case 1:
-                                Console.Write("1) Go Back to Shop Setting\n2) Go Back to Manage Shop Items: ");
-                                int optionBack = Convert.ToInt32(Console.ReadLine());
-                                switch (optionBack)
-                                {
-                                    case 1:
-                                        ShopSetting shopSetting = new ShopSetting();
-                                        shopSetting.ShopSettingMenu();
-                                        break;
-
-                                    case 2:
-                                        ManageShopItem manageShopItem = new ManageShopItem();
-                                        manageShopItem.ManageShopMenu();
-                                        break;
-                                    default:
-                                        Console.WriteLine("Invalid input. Please try again.");
-                                        break;
-                                }
-                            break;
-                        case 2:
-                            Menu();
-                            break;
-                        case 3:
-                            Console.Write("Are you sure you want to exit? (y/n)"); // Check if the user want to exit the application
-                            string ExitInput = Console.ReadLine();
-                            if (ExitInput.Equals("y", StringComparison.OrdinalIgnoreCase))
-                            {
-                                Console.Write("Thank You");
-                                Environment.Exit(0);
-                            }
                             break;
                     }
                 }

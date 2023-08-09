@@ -19,7 +19,8 @@ namespace cSharp_Managing_Invoices
                     Console.WriteLine("      Welcome To    ");
                     Console.WriteLine(" +-+-+-+-+-+-+-+-+-+\r\n |W|h|a|t|I|s|F|u|n|\r\n +-+-+-+-+-+-+-+-+-+");
                     Console.WriteLine("  Managing Invoices  \n");
-
+                    ShopSetting shopSetting = new ShopSetting();
+                    shopSetting.LoadData();
                     MainMenu mainMenu = new MainMenu();
                     mainMenu.Menu();
                 }
