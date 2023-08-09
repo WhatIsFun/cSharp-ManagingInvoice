@@ -68,8 +68,8 @@ namespace cSharp_Managing_Invoices
             newInvoice.PaidAmount = float.Parse(Console.ReadLine());
 
             Console.WriteLine($"Balance: {newInvoice.Balance} OMR");
-
             shopSetting.Invoices.Add(newInvoice);
+            shopSetting.SaveInvoices(shopSetting.Invoices);
 
             // Save the invoice as PDF
             SaveInvoiceAsPdf(newInvoice);

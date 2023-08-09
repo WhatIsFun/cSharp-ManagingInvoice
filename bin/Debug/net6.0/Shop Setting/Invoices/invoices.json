@@ -1,0 +1,20 @@
+[
+  {
+    "InvoiceId": "10082023013839",
+    "CusName": "Test",
+    "CusPhonNumber": "34332",
+    "Items": [
+      {
+        "ItemName": "Mango",
+        "Description": null,
+        "ProductId": "M2",
+        "UnitPrice": 3,
+        "Quantity": 4
+      }
+    ],
+    "InvoiceDate": "Thursday, 10 August 2023 01:38 AM",
+    "Total": 12,
+    "PaidAmount": 20,
+    "Balance": -8
+  }
+]
