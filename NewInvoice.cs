@@ -20,6 +20,7 @@ namespace cSharp_Managing_Invoices
             string formattedInvoiceId = currentDateTime.ToString("ddMMyyyyHHmmss");
             newInvoice.InvoiceDate = formattedDateTime;
             newInvoice.InvoiceId = formattedInvoiceId;
+            shopSetting.LoadItems(ref shopItems);
             Console.Write("Enter Customer Full Name: ");
             newInvoice.CusName = Console.ReadLine();
 
@@ -62,9 +63,9 @@ namespace cSharp_Managing_Invoices
             }
 
 
-            Console.WriteLine($"Total: {CalculateTotal(newInvoice.Items)} OMR");
+            Console.WriteLine($"Total: {newInvoice.Total} OMR");
             Console.Write("Enter Paid Amount: ");
-            float PaidAmount = float.Parse(Console.ReadLine());
+            newInvoice.PaidAmount = float.Parse(Console.ReadLine());
 
             Console.WriteLine($"Balance: {newInvoice.Balance} OMR");
 
@@ -76,34 +77,31 @@ namespace cSharp_Managing_Invoices
             Console.WriteLine("\nInvoice created successfully.");
             mainMenu.Menu();
         }
-        private float CalculateTotal(List<Product> items)
-        {
-            float total = 0;
-            foreach (var item in items)
-            {
-                total += item.UnitPrice * item.Quantity;
-            }
-            return total;
-        }
         static void SaveInvoiceAsPdf(Invoice Invoice)
         {
             ShopSetting shopSetting = new ShopSetting();
             DateTime currentDateTime = DateTime.Now;
             string formattedTitle = currentDateTime.ToString("ddMMyyyyHHmmss");
-            string pdfFileName = $"Invoices/Invoice_{formattedTitle}.pdf";
+            string pdfFileName = $"Shop Setting/Invoices/Invoice_{formattedTitle}.pdf";
 
             Document document = new Document();
             PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(pdfFileName, FileMode.Create));
 
             document.Open();
 
-            document.Add(new Paragraph("Invoice"));
+            document.Add(new Paragraph("                            Invoice                             \n"));
+            //Header Invoice details
+            document.Add(new Paragraph($"Shop Name: {shopSetting.shopName}"));
+            document.Add(new Paragraph($"Tel:       {shopSetting.Tel}"));
+            document.Add(new Paragraph($"Fax:       {shopSetting.Fax}"));
+            document.Add(new Paragraph($"Email:     {shopSetting.Email}"));
+            document.Add(new Paragraph($"Website:   {shopSetting.Website}"));
 
             //Invoice details
             document.Add(new Paragraph($"Invoice Number: {Invoice.InvoiceId}"));
-            document.Add(new Paragraph($"Customer: {Invoice.CusName}"));
-            document.Add(new Paragraph($"Phone Number: {Invoice.CusPhonNumber}"));
-            document.Add(new Paragraph($"Invoice Date: {Invoice.InvoiceDate}"));
+            document.Add(new Paragraph($"Customer:       {Invoice.CusName}"));
+            document.Add(new Paragraph($"Phone Number:   {Invoice.CusPhonNumber}"));
+            document.Add(new Paragraph($"Invoice Date:   {Invoice.InvoiceDate}\n"));
 
             //Item details
             PdfPTable table = new PdfPTable(4);

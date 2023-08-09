@@ -16,7 +16,7 @@ namespace cSharp_Managing_Invoices
         public string CusPhonNumber { get; set; } // Customer phone number
         public List<Product> Items { get; set; }
         public string InvoiceDate { get; set; }
-        public float Total { get; set; }
+        public float Total => Items.Sum(item => item.UnitPrice * item.Quantity);
         public float PaidAmount { get; set; }
         public float Balance => Total - PaidAmount;
     }

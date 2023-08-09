@@ -9,8 +9,6 @@ namespace cSharp_Managing_Invoices
     internal class ManageShopItem
     {
         MainMenu mainMenu = new MainMenu();
-        ShopSetting shopSetting = new ShopSetting();
-
         // Display Manage Shop Items Menu.
         public void ManageShopMenu()
         {
@@ -52,6 +50,8 @@ namespace cSharp_Managing_Invoices
         }
         void AddItem()
         {
+            ShopSetting shopSetting = new ShopSetting();
+
             Product newItem = new Product();
 
             Console.Write("Enter the product ID: ");
@@ -73,6 +73,7 @@ namespace cSharp_Managing_Invoices
         }
         void RemoveItem()
         {
+            ShopSetting shopSetting = new ShopSetting();
             Console.Write("Enter the Item ID to delete: ");
             string productIdToDelete = Console.ReadLine();
 
@@ -92,6 +93,7 @@ namespace cSharp_Managing_Invoices
         }
         void ChangePrice()
         {
+            ShopSetting shopSetting = new ShopSetting();
             Console.Write("Enter the Item ID to change the price: ");
             string productIdToChangePrice = Console.ReadLine();
 
@@ -103,7 +105,6 @@ namespace cSharp_Managing_Invoices
                 itemToChangePrice.UnitPrice = float.Parse(Console.ReadLine());
                 shopSetting.SaveItems(shopSetting.shopItems);
                 Console.WriteLine("Item price changed successfully to {0} OMR.", productIdToChangePrice);
-                
             }
             else
             {
@@ -113,6 +114,8 @@ namespace cSharp_Managing_Invoices
         }
         void DisplayItems()
         {
+            ShopSetting shopSetting = new ShopSetting();
+            shopSetting.LoadData();
             if (shopSetting.shopItems.Count == 0)
             {
                 Console.WriteLine("No items found in the shop.");

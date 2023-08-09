@@ -1,5 +1,6 @@
 ﻿using Org.BouncyCastle.Asn1.TeleTrust;
 using Org.BouncyCastle.Bcpg;
+using Org.BouncyCastle.Bcpg.OpenPgp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +16,12 @@ namespace cSharp_Managing_Invoices
     internal class ShopSetting
     {
         public string shopName { get; set; }
-        public string invoiceHeader { get; set; } 
         public string Tel { get; set; } // shop phone number
         public string Fax { get; set; }
         public string Email { get; set; }
         public string Website { get; set; }
         public List<Product> shopItems = new List<Product>();
-        public  List<Invoice> Invoices = new List<Invoice>();
+        public List<Invoice> Invoices = new List<Invoice>();
         // Display Shop Setting Menu.
         public void ShopSettingMenu()
         {
@@ -63,9 +63,10 @@ namespace cSharp_Managing_Invoices
         {
             LoadItems(ref shopItems);
             LoadInvoices(ref Invoices);
-            LoadInvoiceHeader();
+            LoadInvoiceHeader(Tel, Fax, Email, Website);
+            LoadShopName(shopName);
         }
-        static void LoadInvoiceHeader()
+        static void LoadInvoiceHeader(string Tel, string Fax, string Email, string Website)
         {
             try
             {
@@ -77,10 +78,10 @@ namespace cSharp_Managing_Invoices
                         string[] headerParts = invoiceHeader.Split('\n');
                         if (headerParts.Length == 4)
                         {
-                            string Tel = headerParts[0].Trim();
-                            string Fax = headerParts[1].Trim();
-                            string Email = headerParts[2].Trim();
-                            string Website = headerParts[3].Trim();
+                            Tel = headerParts[0].Trim();
+                            Fax = headerParts[1].Trim();
+                            Email = headerParts[2].Trim();
+                            Website = headerParts[3].Trim();
                         }
                     }
                 }
@@ -154,39 +155,40 @@ namespace cSharp_Managing_Invoices
 
 
         }
-        public void SaveInvoiceHeaderData(string shopTel, string shopFax, string shopEmail, string shopWebsite)
+        public void SaveInvoiceHeaderData(string Tel, string Fax, string Email, string Website)
         {
             using (StreamWriter writer = new StreamWriter("Shop Setting/InvoiceHeader.txt"))
             {
-                writer.WriteLine(shopTel);
-                writer.WriteLine(shopFax);
-                writer.WriteLine(shopEmail);
-                writer.WriteLine(shopWebsite);
+                writer.WriteLine(Tel);
+                writer.WriteLine(Fax);
+                writer.WriteLine(Email);
+                writer.WriteLine(Website);
+                LoadInvoiceHeader(Tel, Email, Fax, Website);
             }
         }
         public void SetInvoiceHeader()
         {
             Console.Write("Enter the shop telephone number: ");
-            string shopTel = Console.ReadLine();
+            Tel = Console.ReadLine();
 
             Console.Write("Enter the shop fax number: ");
-            string shopFax = Console.ReadLine();
+            Fax = Console.ReadLine();
 
             Console.Write("Enter the shop email: ");
-            string shopEmail = Console.ReadLine();
+            Email = Console.ReadLine();
 
             Console.Write("Enter the shop website: ");
-            string shopWebsite = Console.ReadLine();
+            Website = Console.ReadLine();
 
             Console.WriteLine("Invoice header set successfully.");
-            SaveInvoiceHeaderData(shopTel, shopFax, shopEmail, shopWebsite);
+            SaveInvoiceHeaderData(Tel, Fax, Email, Website);
             ShopSetting shopSetting = new ShopSetting();
             shopSetting.ShopSettingMenu();
         }
         public void SetShopName()
         {
             Console.Write("Enter the new shop name: ");
-            string shopName = Console.ReadLine();
+            shopName = Console.ReadLine();
             Console.WriteLine("Shop name set successfully.");
             SaveShopNameData(shopName);
             ShopSetting shopSetting = new ShopSetting();
@@ -194,21 +196,52 @@ namespace cSharp_Managing_Invoices
         }
         public void SaveShopNameData(string shopName)
         {
-            using (StreamWriter writer = new StreamWriter("ShopName.txt"))
+            using (StreamWriter writer = new StreamWriter("Shop Setting/Shop Name.txt"))
             {
                 writer.WriteLine(shopName);
             }
         }
+        static void LoadShopName(string ShopName)
+        {
+            try
+            {
+                string filePath = "Shop Setting/Shop Name.txt";
+
+                if (File.Exists(filePath))
+                {
+                    ShopName = File.ReadAllText(filePath);
+                }
+                else
+                {
+                    Console.WriteLine("Shop name file not found.");
+                    File.WriteAllText(filePath, ShopName);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading shop name: {ex.Message}");
+            }
+        }
+    
         public void SaveData()
         {
             SaveItems(shopItems);
             SaveInvoices(Invoices);
         }
-        public void SaveItems(List <Product> shopItems)
+        public void SaveItems(List<Product> shopItems)
         {
             try
             {
-                string json = JsonSerializer.Serialize(shopItems, new JsonSerializerOptions { WriteIndented = true });
+                List<Product> existingItems = new List<Product>();
+                if (File.Exists("Shop Setting/Items/items.json"))
+                {
+                    string existingJson = File.ReadAllText("Shop Setting/Items/items.json");
+                    existingItems = JsonSerializer.Deserialize<List<Product>>(existingJson);
+                }
+
+                existingItems.AddRange(shopItems); // Append new items to existing data
+
+                string json = JsonSerializer.Serialize(existingItems, new JsonSerializerOptions { WriteIndented = true });
                 Directory.CreateDirectory("Shop Setting/Items"); // Create directory if it doesn't exist
                 File.WriteAllText("Shop Setting/Items/items.json", json);
                 Console.WriteLine("Items saved successfully.");
@@ -222,7 +255,16 @@ namespace cSharp_Managing_Invoices
         {
             try
             {
-                string json = JsonSerializer.Serialize(Invoices, new JsonSerializerOptions { WriteIndented = true });
+                List<Invoice> existingInvoices = new List<Invoice>();
+                if (File.Exists("Shop Setting/Invoices/invoices.json"))
+                {
+                    string existingJson = File.ReadAllText("Shop Setting/Invoices/invoices.json");
+                    existingInvoices = JsonSerializer.Deserialize<List<Invoice>>(existingJson);
+                }
+
+                existingInvoices.AddRange(Invoices); // Append new invoices to existing data
+
+                string json = JsonSerializer.Serialize(existingInvoices, new JsonSerializerOptions { WriteIndented = true });
                 Directory.CreateDirectory("Shop Setting/Invoices"); 
                 File.WriteAllText("Shop Setting/Invoices/invoices.json", json);
                 Console.WriteLine("Invoices saved successfully.");
