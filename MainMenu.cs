@@ -38,7 +38,8 @@ namespace cSharp_Managing_Invoices
                             invoiceSystem.CreateNewInvoice(shopSetting1.shopItems);
                             break;
                         case 4:
-                            Console.WriteLine("4");
+                            ShopReportStatistics shopReportStatistics = new ShopReportStatistics();
+                            shopReportStatistics.ReportStatistics();
                             break;
                         case 5:
                             Console.WriteLine("5");
