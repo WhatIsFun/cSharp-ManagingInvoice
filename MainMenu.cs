@@ -11,6 +11,7 @@ namespace cSharp_Managing_Invoices
     {
         public void Menu()
         {
+            ShopReportStatistics shopReportStatistics = new ShopReportStatistics();
             // Menu Display
             Console.WriteLine("Main Menu: \n1) Shop Settings.\n2) Manage Shop Items.\n3) Create New Invoice.\n4) Report Statistics.\n5) Report All Invoices.\n6) Search for Invoices.\n7) Program Statistics.\n8) Exit.");
             while (true)
@@ -22,6 +23,7 @@ namespace cSharp_Managing_Invoices
                     // Check if the all inputs are numbers if not the program will loop 
                     int NoOption = int.Parse(option);
                     if (NoOption < 0 || NoOption > 9) { Console.WriteLine("Invalid input. Please enter a number between 1 and 8."); }
+                    shopReportStatistics.trackProgramStatistics(NoOption);
                     switch (NoOption)
                     {
                         case 1:
@@ -38,17 +40,16 @@ namespace cSharp_Managing_Invoices
                             invoiceSystem.CreateNewInvoice(shopSetting1.shopItems);
                             break;
                         case 4:
-                            ShopReportStatistics shopReportStatistics = new ShopReportStatistics();
                             shopReportStatistics.ReportStatistics();
                             break;
                         case 5:
-                            Console.WriteLine("5");
+                            shopReportStatistics.ReportAllInvoices();
                             break;
                         case 6:
-                            Console.WriteLine("6");
+                            shopReportStatistics.InvoiceSearching();
                             break;
                         case 7:
-                            Console.WriteLine("7");
+                            shopReportStatistics.ProgramStatistics();
                             break;
                         case 8:
                             Console.Write("Are you sure you want to exit? (y/n)"); // Check if the user want to exit the application

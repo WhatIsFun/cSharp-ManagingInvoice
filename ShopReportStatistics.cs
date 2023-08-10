@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,6 +9,7 @@ namespace cSharp_Managing_Invoices
 {
     internal class ShopReportStatistics
     {
+        private static int[] mainMenuSelections = new int[8];
         public void ReportStatistics()
         {
             ShopSetting shopSetting = new ShopSetting();
@@ -54,6 +56,21 @@ namespace cSharp_Managing_Invoices
             {
                 Console.WriteLine("Please enter a valid Invoice ID.." +
                     "Thank you");
+            }
+        }
+        public void trackProgramStatistics(int menuItem)
+        {
+            if (menuItem >= 1 && menuItem <= 8)
+            {
+                mainMenuSelections[menuItem - 1]++;
+            }
+        }
+        public void ProgramStatistics()
+        {
+            Console.WriteLine("~~~ ~~ ~ Program Statistics ~ ~~ ~~~");
+            for (int i = 0; i < mainMenuSelections.Length; i++)
+            {
+                Console.WriteLine($"Menu Option {i + 1}: Selected {mainMenuSelections[i]} times.");
             }
         }
     }
