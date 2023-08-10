@@ -68,12 +68,14 @@ namespace cSharp_Managing_Invoices
 
             shopSetting.shopItems.Add(newItem);
             shopSetting.SaveItems(shopSetting.shopItems);
+            shopSetting.LoadData();
             Console.WriteLine("Item added successfully.");
             ManageShopMenu();
         }
         void RemoveItem()
         {
             ShopSetting shopSetting = new ShopSetting();
+            shopSetting.LoadData();
             Console.Write("Enter the Item ID to delete: ");
             string productIdToDelete = Console.ReadLine();
 
@@ -94,6 +96,7 @@ namespace cSharp_Managing_Invoices
         void ChangePrice()
         {
             ShopSetting shopSetting = new ShopSetting();
+            shopSetting.LoadData();
             Console.Write("Enter the Item ID to change the price: ");
             string productIdToChangePrice = Console.ReadLine();
 

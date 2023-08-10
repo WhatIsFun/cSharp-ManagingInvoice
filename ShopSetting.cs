@@ -63,10 +63,10 @@ namespace cSharp_Managing_Invoices
         {
             LoadItems(ref shopItems);
             LoadInvoices(ref Invoices);
-            LoadInvoiceHeader(Tel, Fax, Email, Website);
-            LoadShopName(shopName);
+            LoadInvoiceHeader();
+            LoadShopName();
         }
-        static void LoadInvoiceHeader(string Tel, string Fax, string Email, string Website)
+        public void LoadInvoiceHeader()
         {
             try
             {
@@ -155,7 +155,7 @@ namespace cSharp_Managing_Invoices
 
 
         }
-        public void SaveInvoiceHeaderData(string Tel, string Fax, string Email, string Website)
+        public void SaveInvoiceHeaderData()
         {
             using (StreamWriter writer = new StreamWriter("Shop Setting/InvoiceHeader.txt"))
             {
@@ -163,7 +163,7 @@ namespace cSharp_Managing_Invoices
                 writer.WriteLine(Fax);
                 writer.WriteLine(Email);
                 writer.WriteLine(Website);
-                LoadInvoiceHeader(Tel, Email, Fax, Website);
+                LoadInvoiceHeader();
             }
         }
         public void SetInvoiceHeader()
@@ -181,7 +181,7 @@ namespace cSharp_Managing_Invoices
             Website = Console.ReadLine();
 
             Console.WriteLine("Invoice header set successfully.");
-            SaveInvoiceHeaderData(Tel, Fax, Email, Website);
+            SaveInvoiceHeaderData();
             ShopSetting shopSetting = new ShopSetting();
             shopSetting.ShopSettingMenu();
         }
@@ -190,18 +190,18 @@ namespace cSharp_Managing_Invoices
             Console.Write("Enter the new shop name: ");
             shopName = Console.ReadLine();
             Console.WriteLine("Shop name set successfully.");
-            SaveShopNameData(shopName);
+            SaveShopNameData();
             ShopSetting shopSetting = new ShopSetting();
             shopSetting.ShopSettingMenu();
         }
-        public void SaveShopNameData(string shopName)
+        public void SaveShopNameData()
         {
             using (StreamWriter writer = new StreamWriter("Shop Setting/Shop Name.txt"))
             {
                 writer.WriteLine(shopName);
             }
         }
-        static void LoadShopName(string ShopName)
+        static void LoadShopName()
         {
             try
             {
@@ -209,12 +209,11 @@ namespace cSharp_Managing_Invoices
 
                 if (File.Exists(filePath))
                 {
-                    ShopName = File.ReadAllText(filePath);
+                    string shopName = File.ReadAllText(filePath);
                 }
                 else
                 {
                     Console.WriteLine("Shop name file not found.");
-                    File.WriteAllText(filePath, ShopName);
                 }
             }
             catch (Exception ex)

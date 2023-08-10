@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using static iTextSharp.text.pdf.AcroFields;
 
 namespace cSharp_Managing_Invoices
 {
@@ -13,6 +14,7 @@ namespace cSharp_Managing_Invoices
         public void ReportStatistics()
         {
             ShopSetting shopSetting = new ShopSetting();
+            shopSetting.LoadData();
             int numberOfItems = shopSetting.shopItems.Count;
             int numberOfInvoices = shopSetting.Invoices.Count;
             double totalSales = shopSetting.Invoices.Sum(Invoices => Invoices.Total);
@@ -23,6 +25,7 @@ namespace cSharp_Managing_Invoices
         public void ReportAllInvoices() 
         {
             ShopSetting shopSetting = new ShopSetting();
+            shopSetting.LoadData();
             Console.WriteLine("',`',` Report All Invoices ',`',`");
             foreach(Invoice invoice in shopSetting.Invoices)
             {
@@ -38,8 +41,8 @@ namespace cSharp_Managing_Invoices
         public void InvoiceSearching()
         {
             ShopSetting shopSetting = new ShopSetting();
+            shopSetting.LoadData();
             Console.WriteLine("Search for Invoice By ID:\n\n\n");
-            
             Console.WriteLine("Enter the Invoice Id: ");
             string inputInvoiceId = Console.ReadLine();
             var InvoiceSearsh = shopSetting.Invoices.Find(x => x.InvoiceId == inputInvoiceId);

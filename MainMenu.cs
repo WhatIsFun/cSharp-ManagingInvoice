@@ -12,6 +12,8 @@ namespace cSharp_Managing_Invoices
         public void Menu()
         {
             ShopReportStatistics shopReportStatistics = new ShopReportStatistics();
+            ShopSetting shopSetting = new ShopSetting();
+
             // Menu Display
             Console.WriteLine("Main Menu: \n1) Shop Settings.\n2) Manage Shop Items.\n3) Create New Invoice.\n4) Report Statistics.\n5) Report All Invoices.\n6) Search for Invoices.\n7) Program Statistics.\n8) Exit.");
             while (true)
@@ -27,7 +29,7 @@ namespace cSharp_Managing_Invoices
                     switch (NoOption)
                     {
                         case 1:
-                            ShopSetting shopSetting = new ShopSetting();
+                            //ShopSetting shopSetting = new ShopSetting();
                             shopSetting.ShopSettingMenu();
                             break;
                         case 2:
@@ -36,8 +38,7 @@ namespace cSharp_Managing_Invoices
                             break;
                         case 3:
                             NewInvoice invoiceSystem = new NewInvoice();
-                            ShopSetting shopSetting1 = new ShopSetting();
-                            invoiceSystem.CreateNewInvoice(shopSetting1.shopItems);
+                            invoiceSystem.CreateNewInvoice();
                             break;
                         case 4:
                             shopReportStatistics.ReportStatistics();

@@ -59,5 +59,127 @@
     "Total": 13.2,
     "PaidAmount": 13.5,
     "Balance": -0.3000002
+  },
+  {
+    "InvoiceId": "10082023124205",
+    "CusName": "Salim",
+    "CusPhonNumber": "94573242",
+    "Items": [
+      {
+        "ItemName": "Mango",
+        "Description": null,
+        "ProductId": "M1",
+        "UnitPrice": 1,
+        "Quantity": 4
+      }
+    ],
+    "InvoiceDate": "Thursday, 10 August 2023 12:42 PM",
+    "Total": 4,
+    "PaidAmount": 5,
+    "Balance": -1
+  },
+  {
+    "InvoiceId": "10082023013839",
+    "CusName": "Test",
+    "CusPhonNumber": "34332",
+    "Items": [
+      {
+        "ItemName": "Mango",
+        "Description": null,
+        "ProductId": "M2",
+        "UnitPrice": 3,
+        "Quantity": 4
+      }
+    ],
+    "InvoiceDate": "Thursday, 10 August 2023 01:38 AM",
+    "Total": 12,
+    "PaidAmount": 20,
+    "Balance": -8
+  },
+  {
+    "InvoiceId": "10082023112559",
+    "CusName": "Mohammed ",
+    "CusPhonNumber": "383282",
+    "Items": [
+      {
+        "ItemName": "Cola",
+        "Description": null,
+        "ProductId": "M3",
+        "UnitPrice": 0.3,
+        "Quantity": 4
+      }
+    ],
+    "InvoiceDate": "Thursday, 10 August 2023 11:25 AM",
+    "Total": 1.2,
+    "PaidAmount": 1.5,
+    "Balance": -0.29999995
+  },
+  {
+    "InvoiceId": "10082023115333",
+    "CusName": "Mohammed ",
+    "CusPhonNumber": "94385745",
+    "Items": [
+      {
+        "ItemName": "Mango",
+        "Description": null,
+        "ProductId": "M2",
+        "UnitPrice": 3,
+        "Quantity": 4
+      },
+      {
+        "ItemName": "Water",
+        "Description": null,
+        "ProductId": "M5",
+        "UnitPrice": 0.3,
+        "Quantity": 4
+      }
+    ],
+    "InvoiceDate": "Thursday, 10 August 2023 11:53 AM",
+    "Total": 13.2,
+    "PaidAmount": 13.5,
+    "Balance": -0.3000002
+  },
+  {
+    "InvoiceId": "10082023124205",
+    "CusName": "Salim",
+    "CusPhonNumber": "94573242",
+    "Items": [
+      {
+        "ItemName": "Mango",
+        "Description": null,
+        "ProductId": "M1",
+        "UnitPrice": 1,
+        "Quantity": 4
+      }
+    ],
+    "InvoiceDate": "Thursday, 10 August 2023 12:42 PM",
+    "Total": 4,
+    "PaidAmount": 5,
+    "Balance": -1
+  },
+  {
+    "InvoiceId": "10082023133155",
+    "CusName": "Sara",
+    "CusPhonNumber": "85394589",
+    "Items": [
+      {
+        "ItemName": "Mango",
+        "Description": null,
+        "ProductId": "M1",
+        "UnitPrice": 1,
+        "Quantity": 2
+      },
+      {
+        "ItemName": "lemon juice",
+        "Description": null,
+        "ProductId": "M7",
+        "UnitPrice": 0.25,
+        "Quantity": 3
+      }
+    ],
+    "InvoiceDate": "Thursday, 10 August 2023 01:31 PM",
+    "Total": 2.75,
+    "PaidAmount": 3,
+    "Balance": -0.25
   }
 ]
